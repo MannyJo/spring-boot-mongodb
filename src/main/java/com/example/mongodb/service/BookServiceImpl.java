@@ -23,18 +23,13 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public int updateBook(Book update) {
-		return getBookById(update.getId()).map(book -> {
-			bookRepository.save(update);
-			return 1;
-		}).orElse(0);
+	public Book updateBook(Book update) {
+		return getBookById(update.getId()).map(book -> bookRepository.save(update)).orElse(null);
 	}
 
 	@Override
-	public int addBook(Book book) {
-		Book insert = bookRepository.insert(book);
-		System.out.println(insert.toString());
-		return 1;
+	public Book addBook(Book book) {
+		return bookRepository.insert(book);
 	}
 
 	@Override

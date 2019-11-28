@@ -1,6 +1,7 @@
 package com.example.mongodb.controller;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,8 @@ public class BookController {
 	
 	@PostMapping
 	public void addBook(@RequestBody Book book) {
-		bookService.addBook(book);
+		Book addedBook = bookService.addBook(book);
+		System.out.println("Added Book : " + addedBook.toString());
 	}
 	
 	@DeleteMapping("delete/all")
@@ -44,14 +46,14 @@ public class BookController {
 	}
 	
 	@GetMapping("{id}")
-	public Book getBookById(@PathVariable ObjectId id) {
-		return bookService.getBookById(id).orElse(null);
+	public Optional<Book> getBookById(@PathVariable ObjectId id) {
+		return bookService.getBookById(id);
 	}
 	
 	@PutMapping
 	public void updateBook(@RequestBody Book update) {
-		System.out.println(update);
-		System.out.println(bookService.updateBook(update));
+		Book updatedBook = bookService.updateBook(update);
+		System.out.println("Updated Book : " + updatedBook.toString());
 	}
 
 }
